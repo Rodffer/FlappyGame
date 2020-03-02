@@ -18,3 +18,6 @@ func _process(delta):
 func _on_Area2D_body_enter( body ):
 	if body.get_name() == "Bird":
 		scene.kill()
+
+func _on_Point_body_enter( body ):
+	scene.points()

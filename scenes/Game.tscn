@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=1]
+[gd_scene load_steps=23 format=1]
 
 [ext_resource path="res://scenes/game.gd" type="Script" id=1]
 [ext_resource path="res://assets/terrain.png" type="Texture" id=2]
@@ -7,9 +7,12 @@
 [ext_resource path="res://assets/bird/bird_2.png" type="Texture" id=5]
 [ext_resource path="res://assets/bird/bird.png" type="Texture" id=6]
 [ext_resource path="res://assets/bird/bird_1.png" type="Texture" id=7]
-[ext_resource path="res://scenes/Column.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scripts/generator.gd" type="Script" id=9]
-[ext_resource path="res://assets/font_happy_fly.fnt" type="BitmapFont" id=10]
+[ext_resource path="res://sound/somVoa.ogg" type="AudioStream" id=8]
+[ext_resource path="res://scenes/Column.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/generator.gd" type="Script" id=10]
+[ext_resource path="res://assets/font_happy_fly.fnt" type="BitmapFont" id=11]
+[ext_resource path="res://sound/somScore.ogg" type="AudioStream" id=12]
+[ext_resource path="res://sound/somHit.ogg" type="AudioStream" id=13]
 
 [sub_resource type="Animation" id=1]
 
@@ -261,6 +264,17 @@ shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 4
 
+[node name="SoundFly" type="StreamPlayer" parent="Bird"]
+
+stream/stream = ExtResource( 8 )
+stream/play = false
+stream/loop = false
+stream/volume_db = 0.0
+stream/autoplay = false
+stream/paused = false
+stream/loop_restart_time = 0.0
+stream/buffering_ms = 500
+
 [node name="Limits" type="StaticBody2D" parent="."]
 
 editor/display_folded = true
@@ -295,14 +309,14 @@ _update_shape_index = 1
 
 editor/display_folded = true
 
-[node name="Column" parent="Columns" instance=ExtResource( 8 )]
+[node name="Column" parent="Columns" instance=ExtResource( 9 )]
 
 transform/pos = Vector2( 1238.96, 1104.74 )
 
 [node name="Generator" type="Position2D" parent="Columns"]
 
 transform/pos = Vector2( 1426.92, 1142.49 )
-script/script = ExtResource( 9 )
+script/script = ExtResource( 10 )
 
 [node name="Timer" type="Timer" parent="Columns/Generator"]
 
@@ -320,6 +334,7 @@ autostart = false
 
 [node name="Points" type="Node2D" parent="."]
 
+editor/display_folded = true
 z/z = 1
 
 [node name="Control" type="Control" parent="Points"]
@@ -343,12 +358,34 @@ margin/left = 69.0
 margin/top = 94.0
 margin/right = 271.0
 margin/bottom = 277.0
-custom_fonts/font = ExtResource( 10 )
+custom_fonts/font = ExtResource( 11 )
 text = "0"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="SoundScore" type="StreamPlayer" parent="."]
+
+stream/stream = ExtResource( 12 )
+stream/play = false
+stream/loop = false
+stream/volume_db = 0.0
+stream/autoplay = false
+stream/paused = false
+stream/loop_restart_time = 0.0
+stream/buffering_ms = 500
+
+[node name="SoundHit" type="StreamPlayer" parent="."]
+
+stream/stream = ExtResource( 13 )
+stream/play = false
+stream/loop = false
+stream/volume_db = 0.0
+stream/autoplay = false
+stream/paused = false
+stream/loop_restart_time = 0.0
+stream/buffering_ms = 500
 
 [connection signal="timeout" from="Columns/Generator/Timer" to="Columns/Generator" method="_on_Timer_timeout"]
 

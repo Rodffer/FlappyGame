@@ -17,15 +17,18 @@ func _ready():
 	pass
 	
 func kill():
+	get_node("Bird/bird_anim").play("losers_weepers")
 	bird.apply_impulse(Vector2(0,0), Vector2(-1000,0))
 	floor_anim.stop()
 	back_anim.stop()
 	state = END
 	time_to_replay.start()
+	get_node("SoundHit").play()
 
 func points():
 	points += 1
 	label.set_text(str(points))
+	get_node("SoundScore").play()
 
 func _on_TimeToReplay_timeout():
 	get_tree().reload_current_scene()
